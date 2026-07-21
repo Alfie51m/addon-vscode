@@ -1,6 +1,6 @@
 ---
 name: Studio Code Server
-version: dev
+version: 6.1.0
 slug: vscode
 description: Fully featured Visual Studio Code (VSCode) experience integrated in the Home Assistant frontend.
 url: https://github.com/hassio-addons/addon-vscode
