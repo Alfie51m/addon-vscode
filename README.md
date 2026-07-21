@@ -1,78 +1,57 @@
-# Home Assistant Community Add-on: Studio Code Server
+# Code Editor (personal fork of Studio Code Server)
 
-[![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
 
-![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]
+![Supports aarch64 Architecture][aarch64-shield]
 
-[![Github Actions][github-actions-shield]][github-actions]
-![Project Maintenance][maintenance-shield]
-[![GitHub Activity][commits-shield]][commits]
-
-[![Discord][discord-shield]][discord]
-[![Community Forum][forum-shield]][forum]
-
-[![Sponsor Frenck via GitHub Sponsors][github-sponsors-shield]][github-sponsors]
-
-[![Support Frenck on Patreon][patreon-shield]][patreon]
-
-A VSCode experience, accessible through the browser.
+A VSCode experience, accessible through the browser — personal fork with an
+updated editor and extension stack.
 
 ![Studio Code Server in the Home Assistant Frontend](images/screenshot.png)
 
 ## About
 
-This add-on runs [code-server](https://github.com/cdr/code-server), which
+This add-on runs [code-server](https://github.com/coder/code-server), which
 gives you a Visual Studio Code experience straight from the browser. It allows
 you to edit your Home Assistant configuration directly from your web browser,
 directly from within the Home Assistant frontend.
 
-The add-on has the Home Assistant, MDI icons and YAML extensions pre-installed
-and pre-configured right out of the box. This means that auto-completion works
-instantly, without the need for configuring anything.
+This is a personal fork of the original
+[Studio Code Server][upstream] add-on by Franck Nijhof, maintained here to
+keep the bundled editor and extensions current. The upstream add-on had gone
+without a version bump for an extended period, so this fork updates:
+
+- **code-server**: `v4.129.0` (VS Code `1.129.0`)
+- **Home Assistant CLI**: `5.0.0`
+- Bundled extensions refreshed to their latest available versions, including
+  the Home Assistant Config Helper, YAML, ESPHome, Prettier, Error Lens,
+  indent-rainbow, Material Design Icons Intellisense, and Log File Highlighter
+- `esphome` and `yamllint` backend tooling refreshed to current releases
+
+This add-on always builds locally against this repository's `Dockerfile` —
+there is no prebuilt image to pull, so installs and updates take a few
+minutes while Home Assistant compiles it on your host.
 
 [:books: Read the full add-on documentation][docs]
 
 ## Support
 
-Got questions?
+This is a personal fork maintained for my own Home Assistant instance. It is
+not affiliated with or supported by the original Studio Code Server project
+or its Discord/Community Forum channels.
 
-You have several options to get them answered:
+If you run into an issue specifically with this fork, feel free to
+[open an issue here][issue].
 
-- The [Home Assistant Community Add-ons Discord chat server][discord] for add-on
-  support and feature requests.
-- The [Home Assistant Discord chat server][discord-ha] for general Home
-  Assistant discussions and questions.
-- The Home Assistant [Community Forum][forum].
-- Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
-
-You could also [open an issue here][issue] GitHub.
-
-## Contributing
-
-This is an active open-source project. We are always open to people who want to
-use the code or contribute to it.
-
-We have set up a separate document containing our
-[contribution guidelines](.github/CONTRIBUTING.md).
-
-Thank you for being involved! :heart_eyes:
+For the original, actively-supported project, see
+[hassio-addons/addon-vscode][upstream].
 
 ## Authors & contributors
 
-The original setup of this repository is by [Franck Nijhof][frenck].
-
-For a full list of all authors and contributors,
-check [the contributor's page][contributors].
-
-## We have got some Home Assistant add-ons for you
-
-Want some more functionality to your Home Assistant instance?
-
-We have created multiple add-ons for Home Assistant. For a full list, check out
-our [GitHub Repository][repository].
+The original setup of this repository is by [Franck Nijhof][frenck]. This
+fork's version bumps and modifications are maintained by [Alfie51m][me].
 
 ## License
 
@@ -100,27 +79,10 @@ SOFTWARE.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[commits-shield]: https://img.shields.io/github/commit-activity/y/hassio-addons/addon-vscode.svg
-[commits]: https://github.com/hassio-addons/addon-vscode/commits/main
-[contributors]: https://github.com/hassio-addons/addon-vscode/graphs/contributors
-[discord-ha]: https://discord.gg/c5DvZ4e
-[discord-shield]: https://img.shields.io/discord/478094546522079232.svg
-[discord]: https://discord.me/hassioaddons
-[docs]: https://github.com/hassio-addons/addon-vscode/blob/main/vscode/DOCS.md
-[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
-[forum]: https://community.home-assistant.io/t/home-assistant-community-add-on-visual-studio-code/107863?u=frenck
+[docs]: https://github.com/Alfie51m/addon-vscode/blob/main/vscode/DOCS.md
 [frenck]: https://github.com/frenck
-[github-actions-shield]: https://github.com/hassio-addons/addon-vscode/workflows/CI/badge.svg
-[github-actions]: https://github.com/hassio-addons/addon-vscode/actions
-[github-sponsors-shield]: https://frenck.dev/wp-content/uploads/2019/12/github_sponsor.png
-[github-sponsors]: https://github.com/sponsors/frenck
-[issue]: https://github.com/hassio-addons/addon-vscode/issues
-[license-shield]: https://img.shields.io/github/license/hassio-addons/addon-vscode.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
-[patreon-shield]: https://frenck.dev/wp-content/uploads/2019/12/patreon.png
-[patreon]: https://www.patreon.com/frenck
-[project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
-[reddit]: https://reddit.com/r/homeassistant
-[releases-shield]: https://img.shields.io/github/release/hassio-addons/addon-vscode.svg
-[releases]: https://github.com/hassio-addons/addon-vscode/releases
-[repository]: https://github.com/hassio-addons/repository
+[issue]: https://github.com/Alfie51m/addon-vscode/issues
+[license-shield]: https://img.shields.io/github/license/Alfie51m/addon-vscode.svg
+[me]: https://github.com/Alfie51m
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-personal%20fork-blue.svg
+[upstream]: https://github.com/hassio-addons/addon-vscode
