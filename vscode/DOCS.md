@@ -5,6 +5,17 @@ gives you a Visual Studio Code experience straight from the browser. It allows
 you to edit your Home Assistant configuration directly from your web browser,
 directly from within the Home Assistant frontend.
 
+This is a personal fork of the original [Studio Code Server][upstream]
+add-on by Franck Nijhof, maintained here to keep the bundled editor and
+extensions current. It bundles:
+
+- **code-server**: `v4.129.0` (VS Code `1.129.0`)
+- **Home Assistant CLI**: `5.0.0`
+- Refreshed extensions, including the Home Assistant Config Helper, YAML,
+  ESPHome, Prettier, Error Lens, indent-rainbow, Material Design Icons
+  Intellisense, and Log File Highlighter
+- Refreshed `esphome` and `yamllint` backend tooling
+
 The add-on has the Home Assistant, MDI icons and YAML extensions pre-installed
 and pre-configured right out of the box. This means that auto-completion works
 instantly, without the need for configuring anything.
@@ -24,6 +35,11 @@ comparison to installing any other Home Assistant add-on.
 1. Check the logs of the "Studio Code Server" add-on to see if everything went
    well.
 1. Click the "OPEN WEB UI" button to open Studio Code Server.
+
+**Note**: _This add-on always builds locally against this repository's
+`Dockerfile` — there is no prebuilt image to pull. Installs and updates will
+therefore take a few minutes while Home Assistant compiles the add-on on your
+host._
 
 ## Configuration
 
@@ -135,25 +151,20 @@ based on the following:
 
 ## Support
 
-Got questions?
+This is a personal fork maintained for my own Home Assistant instance. It is
+not affiliated with or supported by the original Studio Code Server project
+or its Discord/Community Forum channels.
 
-You have several options to get them answered:
+If you run into an issue specifically with this fork, feel free to
+[open an issue here][issue].
 
-- The [Home Assistant Community Add-ons Discord chat server][discord] for add-on
-  support and feature requests.
-- The [Home Assistant Discord chat server][discord-ha] for general Home
-  Assistant discussions and questions.
-- The Home Assistant [Community Forum][forum].
-- Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
-
-You could also [open an issue here][issue] GitHub.
+For the original, actively-supported project, see
+[hassio-addons/addon-vscode][upstream].
 
 ## Authors & contributors
 
-The original setup of this repository is by [Franck Nijhof][frenck].
-
-For a full list of all authors and contributors,
-check [the contributor's page][contributors].
+The original setup of this repository is by [Franck Nijhof][frenck]. This
+fork's version bumps and modifications are maintained by [Alfie51m][me].
 
 ## License
 
@@ -181,13 +192,10 @@ SOFTWARE.
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
 [addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=a0d7b954_vscode&repository_url=https%3A%2F%2Fgithub.com%2Fhassio-addons%2Frepository
-[contributors]: https://github.com/hassio-addons/addon-vscode/graphs/contributors
-[discord-ha]: https://discord.gg/c5DvZ4e
-[discord]: https://discord.me/hassioaddons
-[forum]: https://community.home-assistant.io/t/home-assistant-community-add-on-visual-studio-code/107863?u=frenck
 [frenck]: https://github.com/frenck
-[issue]: https://github.com/hassio-addons/addon-vscode/issues
-[reddit]: https://reddit.com/r/homeassistant
-[releases]: https://github.com/hassio-addons/addon-vscode/releases
+[issue]: https://github.com/Alfie51m/addon-vscode/issues
+[me]: https://github.com/Alfie51m
+[releases]: https://github.com/Alfie51m/addon-vscode/releases
 [semver]: https://semver.org/spec/v2.0.0
 [ubuntu-packages]: https://packages.ubuntu.com
+[upstream]: https://github.com/hassio-addons/addon-vscode
