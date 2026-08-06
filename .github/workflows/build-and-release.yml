@@ -10,7 +10,7 @@ on:
     paths:
       - "vscode/**"
       - ".github/workflows/build-and-release.yml"
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 env:
   IMAGE_NAME: addon-vscode
@@ -72,6 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
+      image: ${{ steps.image.outputs.image }}
     steps:
       - name: ⬇️ Checkout
         uses: actions/checkout@v6
@@ -82,6 +83,17 @@ jobs:
         with:
           architectures: ${{ env.ARCHITECTURES }}
           image-name: ${{ env.IMAGE_NAME }}
+
+      - name: 🔡 Compute lowercase image path
+        id: image
+        run: |
+          # GHCR requires an all-lowercase path. github.repository_owner
+          # preserves account casing as-is (e.g. "Alfie51m"), and neither
+          # of the home-assistant/builder actions above lowercase it for
+          # us, so every job below uses this output instead of letting
+          # those actions build the image path themselves.
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=ghcr.io/${owner}/${{ env.IMAGE_NAME }}" >> "$GITHUB_OUTPUT"
 
   test-build:
     name: 🏗️ Trial build (${{ matrix.arch }})
@@ -102,8 +114,8 @@ jobs:
           arch: ${{ matrix.arch }}
           context: vscode
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image: ${{ matrix.image }}
-          image-tags: pr-check
+          image: ${{ needs.prepare.outputs.image }}
+          image-tags: ${{ matrix.arch }}-pr-check
           push: "false"
           load: "false"
           cosign: "false"
@@ -166,10 +178,10 @@ jobs:
           arch: ${{ matrix.arch }}
           context: vscode
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image: ${{ matrix.image }}
+          image: ${{ needs.prepare.outputs.image }}
           image-tags: |
-            ${{ needs.check-version.outputs.version }}
-            latest
+            ${{ matrix.arch }}-${{ needs.check-version.outputs.version }}
+            ${{ matrix.arch }}-latest
           push: "true"
           cosign: "false"
           version: ${{ needs.check-version.outputs.version }}
@@ -185,20 +197,31 @@ jobs:
   # ----------------------------------------------------------------------
   manifest:
     name: 🗂️ Publish multi-arch manifest
-    needs: [check-version, publish]
+    needs: [prepare, check-version, publish]
     runs-on: ubuntu-latest
     permissions:
       packages: write
     steps:
-      - name: 🗂️ Publish manifest
-        uses: home-assistant/builder/actions/publish-multi-arch-manifest@2026.06.0
+      - name: 🔐 Log in to GHCR
+        uses: docker/login-action@v4
         with:
-          architectures: ${{ env.ARCHITECTURES }}
-          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: ${{ env.IMAGE_NAME }}
-          image-tags: |
-            ${{ needs.check-version.outputs.version }}
-            latest
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: 🗂️ Combine per-arch images into one manifest
+        env:
+          IMAGE: ${{ needs.prepare.outputs.image }}
+          VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          docker buildx imagetools create \
+            -t "${IMAGE}:${VERSION}" \
+            -t "${IMAGE}:latest" \
+            "${IMAGE}:amd64-${VERSION}" \
+            "${IMAGE}:aarch64-${VERSION}"
 
   # ----------------------------------------------------------------------
   # Changelog + GitHub Release. CHANGELOG.md lives in the add-on folder
