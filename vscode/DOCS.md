@@ -36,10 +36,9 @@ comparison to installing any other Home Assistant add-on.
    well.
 1. Click the "OPEN WEB UI" button to open Studio Code Server.
 
-**Note**: _This add-on always builds locally against this repository's
-`Dockerfile` — there is no prebuilt image to pull. Installs and updates will
-therefore take a few minutes while Home Assistant compiles the add-on on your
-host._
+**Note**: _This add-on ships a prebuilt multi-arch image published by GitHub
+Actions on every release, so installs and updates pull the image instead of
+building it on your host._
 
 ## Configuration
 

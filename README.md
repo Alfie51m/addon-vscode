@@ -30,9 +30,9 @@ without a version bump for an extended period, so this fork updates:
   indent-rainbow, Material Design Icons Intellisense, and Log File Highlighter
 - `esphome` and `yamllint` backend tooling refreshed to current releases
 
-This add-on always builds locally against this repository's `Dockerfile` —
-there is no prebuilt image to pull, so installs and updates take a few
-minutes while Home Assistant compiles it on your host.
+This add-on publishes a prebuilt multi-arch image via GitHub Actions on
+every release, so installs and updates pull the image from GHCR instead of
+building on your host.
 
 [:books: Read the full add-on documentation][docs]
 
