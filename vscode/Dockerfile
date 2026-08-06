@@ -135,30 +135,29 @@ HEALTHCHECK \
     CMD curl --fail http://127.0.0.1:1337/healthz || exit 1
 
 # Build arguments
-ARG BUILD_ARCH
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
-ARG BUILD_VERSION
+# BUILD_ARCH (declared earlier, above) and BUILD_VERSION are supplied
+# automatically by the home-assistant/builder build-image action (and
+# default sanely for plain `docker build` / local testing).
+ARG BUILD_VERSION="local"
 
 # Labels
+# io.hass.arch, io.hass.version, and the OCI created/source/version
+# labels are re-applied (and overridden) by the CI build action - the
+# values below are static/local-build defaults.
 LABEL \
-    io.hass.name="${BUILD_NAME}" \
-    io.hass.description="${BUILD_DESCRIPTION}" \
+    io.hass.name="Studio Code Server" \
+    io.hass.description="Fully featured Visual Studio Code (VSCode) experience integrated in the Home Assistant frontend." \
     io.hass.arch="${BUILD_ARCH}" \
-    io.hass.type="addon" \
-    io.hass.version=${BUILD_VERSION} \
-    maintainer="Franck Nijhof <frenck@addons.community>" \
-    org.opencontainers.image.title="${BUILD_NAME}" \
-    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.vendor="Home Assistant Community Add-ons" \
-    org.opencontainers.image.authors="Franck Nijhof <frenck@addons.community>" \
+    io.hass.type="app" \
+    io.hass.version="${BUILD_VERSION}" \
+    io.hass.url="https://github.com/Alfie51m/addon-vscode" \
+    maintainer="Alfie51m" \
+    org.opencontainers.image.title="Studio Code Server" \
+    org.opencontainers.image.description="Fully featured Visual Studio Code (VSCode) experience integrated in the Home Assistant frontend." \
+    org.opencontainers.image.vendor="Alfie51m" \
+    org.opencontainers.image.authors="Alfie51m" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.url="https://addons.community" \
-    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
-    org.opencontainers.image.created=${BUILD_DATE} \
-    org.opencontainers.image.revision=${BUILD_REF} \
-    org.opencontainers.image.version=${BUILD_VERSION}
+    org.opencontainers.image.url="https://github.com/Alfie51m/addon-vscode" \
+    org.opencontainers.image.source="https://github.com/Alfie51m/addon-vscode" \
+    org.opencontainers.image.documentation="https://github.com/Alfie51m/addon-vscode/blob/main/README.md" \
+    org.opencontainers.image.version="${BUILD_VERSION}"
