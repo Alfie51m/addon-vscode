@@ -1,0 +1,259 @@
+---
+name: Build & Release
+
+on:
+  pull_request:
+    paths:
+      - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
+  push:
+    branches: [main]
+    paths:
+      - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
+
+env:
+  IMAGE_NAME: addon-vscode
+  ARCHITECTURES: '["amd64", "aarch64"]'
+  BUILDER_VERSION: "2026.06.0" # home-assistant/builder release, pin & bump deliberately
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: 🔍 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v6
+
+      - name: 🐳 Hadolint the Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: vscode/Dockerfile
+          config: .hadolint.yaml
+          failure-threshold: warning
+
+      - name: 📝 YAML lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+
+      - name: 🐚 ShellCheck rootfs scripts
+        run: |
+          shopt -s globstar nullglob
+          files=(vscode/rootfs/**/run vscode/rootfs/**/finish)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No rootfs scripts found to lint."
+            exit 0
+          fi
+          shellcheck --shell=bash "${files[@]}"
+
+      - name: ✅ Validate config.yaml
+        run: |
+          python3 -m pip install --quiet yq
+          test -n "$(yq -r '.version' vscode/config.yaml)" || {
+            echo "::error::config.yaml is missing a version"; exit 1; }
+          test -n "$(yq -r '.image' vscode/config.yaml)" || {
+            echo "::error::config.yaml is missing the image field"; exit 1; }
+          echo "config.yaml OK: version=$(yq -r '.version' vscode/config.yaml), image=$(yq -r '.image' vscode/config.yaml)"
+
+  prepare:
+    name: 🧮 Prepare build matrix
+    needs: lint
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v6
+
+      - name: 🧮 Get build matrix
+        id: matrix
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@${{ env.BUILDER_VERSION }}
+        with:
+          architectures: ${{ env.ARCHITECTURES }}
+          image-name: ${{ env.IMAGE_NAME }}
+
+  test-build:
+    name: 🏗️ Trial build (${{ matrix.arch }})
+    needs: prepare
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    permissions:
+      contents: read
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v6
+
+      - name: 🏗️ Build ${{ matrix.arch }} (no push)
+        uses: home-assistant/builder/actions/build-image@${{ env.BUILDER_VERSION }}
+        with:
+          arch: ${{ matrix.arch }}
+          context: vscode
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: pr-check
+          push: "false"
+          load: "false"
+          cosign: "false"
+          version: "0.0.0-ci"
+
+  check-version:
+    name: 🔖 Check version
+    needs: test-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check.outputs.should_release }}
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: 🔖 Compare version against existing tags
+        id: check
+        run: |
+          python3 -m pip install --quiet yq
+          version=$(yq -r '.version' vscode/config.yaml)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+          if git rev-parse "v${version}" >/dev/null 2>&1; then
+            echo "Tag v${version} already exists, nothing to release."
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "New version detected: ${version}"
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  publish:
+    name: 📦 Publish ${{ matrix.arch }} image
+    needs: [prepare, check-version]
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v6
+
+      - name: 📦 Build & push ${{ matrix.arch }}
+        uses: home-assistant/builder/actions/build-image@${{ env.BUILDER_VERSION }}
+        with:
+          arch: ${{ matrix.arch }}
+          context: vscode
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ needs.check-version.outputs.version }}
+            latest
+          push: "true"
+          cosign: "false"
+          version: ${{ needs.check-version.outputs.version }}
+          labels: |
+            io.hass.name=Studio Code Server
+            io.hass.description=Fully featured Visual Studio Code (VSCode) experience integrated in the Home Assistant frontend.
+            io.hass.type=app
+            io.hass.url=https://github.com/Alfie51m/addon-vscode
+
+  manifest:
+    name: 🗂️ Publish multi-arch manifest
+    needs: [check-version, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: 🗂️ Publish manifest
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@${{ env.BUILDER_VERSION }}
+        with:
+          architectures: ${{ env.ARCHITECTURES }}
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: ${{ env.IMAGE_NAME }}
+          image-tags: |
+            ${{ needs.check-version.outputs.version }}
+            latest
+
+  changelog-and-release:
+    name: 📝 Changelog & release
+    needs: [check-version, manifest]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: ⬇️ Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📝 Generate changelog entry
+        id: changelog
+        env:
+          VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          previous_tag=$(git tag -l 'v*' --sort=-v:refname | head -n1 || true)
+
+          if [ -n "${previous_tag}" ]; then
+            range="${previous_tag}..HEAD"
+          else
+            range="HEAD"
+          fi
+
+          {
+            echo "entry<<CHANGELOG_EOF"
+            echo "## ${VERSION} - $(date -u +%Y-%m-%d)"
+            echo
+            log=$(git log "${range}" --no-merges --pretty=format:'- %s (%h)' -- vscode)
+            if [ -n "${log}" ]; then echo "${log}"; else echo "- Maintenance release."; fi
+            echo
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: 📝 Update CHANGELOG.md
+        env:
+          ENTRY: ${{ steps.changelog.outputs.entry }}
+        run: |
+          marker="<!-- new entries are inserted below this line by the release workflow -->"
+          test -f vscode/CHANGELOG.md || {
+            echo "::error::vscode/CHANGELOG.md is missing"; exit 1; }
+          grep -qF "${marker}" vscode/CHANGELOG.md || {
+            echo "::error::CHANGELOG.md marker comment not found"; exit 1; }
+
+          tmpfile=$(mktemp)
+          awk -v marker="${marker}" -v entry="${ENTRY}" '
+            { print }
+            $0 == marker { print ""; print entry }
+          ' vscode/CHANGELOG.md > "${tmpfile}"
+          mv "${tmpfile}" vscode/CHANGELOG.md
+
+      - name: ⬆️ Commit & tag
+        env:
+          VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vscode/CHANGELOG.md
+          git commit -m "📝 Update changelog for v${VERSION} [skip ci]"
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin main
+          git push origin "v${VERSION}"
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.check-version.outputs.version }}
+          name: v${{ needs.check-version.outputs.version }}
+          body: ${{ steps.changelog.outputs.entry }}
+          generate_release_notes: false

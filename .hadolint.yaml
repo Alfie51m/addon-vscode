@@ -1,0 +1,8 @@
+---
+ignored:
+  # Pinning every apt package version is impractical for this addon and is
+  # already handled by Renovate tracking Debian package versions separately.
+  - DL3008
+  # BUILD_FROM is intentionally a variable with a pinned default, not a
+  # literal tag, so hadolint can't verify the pin itself.
+  - DL3006
