@@ -46,7 +46,7 @@ RUN \
         unzip \
         uuid-runtime \
         wget \
-        zip5 \
+        zip \
         zsh \
         less \
     \
