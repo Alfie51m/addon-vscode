@@ -18,6 +18,9 @@ COPY requirements.txt /tmp/requirements.txt
 # Copy in extensions list
 COPY vscode.extensions /root/vscode.extensions
 
+# Copy in custom branding assets
+COPY branding/code-icon.svg /tmp/code-icon.svg
+
 # Setup base system
 ARG BUILD_ARCH=amd64
 ARG CODE_SERVER_VERSION="v4.131.0"
@@ -63,6 +66,11 @@ RUN \
     && tar zxvf \
         /tmp/code.tar.gz \
         --strip 1 -C /usr/local/lib/code-server \
+    \
+    && cp /tmp/code-icon.svg \
+        /usr/local/lib/code-server/lib/vscode/out/media/code-icon.svg \
+    && cp /tmp/code-icon.svg \
+        /usr/local/lib/code-server/lib/vscode/out/vs/workbench/browser/media/code-icon.svg \
     \
     && ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server \
     \

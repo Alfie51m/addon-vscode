@@ -15,10 +15,6 @@ on:
 env:
   IMAGE_NAME: addon-vscode
   ARCHITECTURES: '["amd64", "aarch64"]'
-  # NOTE: home-assistant/builder version is pinned directly in each `uses:`
-  # line below (2026.06.0) rather than referenced from here, because the
-  # `env` context is not available inside `uses:` expressions - bump all
-  # four occurrences together when upgrading.
 
 permissions:
   contents: read
@@ -45,6 +41,7 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .yamllint
+          file_or_dir: vscode/config.yaml
 
       - name: 🐚 ShellCheck rootfs scripts
         run: |
