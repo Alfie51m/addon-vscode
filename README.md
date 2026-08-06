@@ -23,8 +23,8 @@ This is a personal fork of the original
 keep the bundled editor and extensions current. The upstream add-on had gone
 without a version bump for an extended period, so this fork updates:
 
-- **code-server**: `v4.129.0` (VS Code `1.129.0`)
-- **Home Assistant CLI**: `5.0.0`
+- **code-server**: `v4.131.0` (VS Code `1.131.0`)
+- **Home Assistant CLI**: `5.2.0`
 - Bundled extensions refreshed to their latest available versions, including
   the Home Assistant Config Helper, YAML, ESPHome, Prettier, Error Lens,
   indent-rainbow, Material Design Icons Intellisense, and Log File Highlighter

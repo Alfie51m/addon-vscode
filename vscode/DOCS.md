@@ -9,8 +9,8 @@ This is a personal fork of the original [Studio Code Server][upstream]
 add-on by Franck Nijhof, maintained here to keep the bundled editor and
 extensions current. It bundles:
 
-- **code-server**: `v4.129.0` (VS Code `1.129.0`)
-- **Home Assistant CLI**: `5.0.0`
+- **code-server**: `v4.131.0` (VS Code `1.131.0`)
+- **Home Assistant CLI**: `5.2.0`
 - Refreshed extensions, including the Home Assistant Config Helper, YAML,
   ESPHome, Prettier, Error Lens, indent-rainbow, Material Design Icons
   Intellisense, and Log File Highlighter
