@@ -1,9 +1,10 @@
 ---
 name: Studio Code Server
-version: 6.2.0
+version: 6.3.0
 slug: vscode
 description: Fully featured Visual Studio Code (VSCode) experience integrated in the Home Assistant frontend.
 url: https://github.com/alfie51m/addon-vscode
+image: "ghcr.io/alfie51m/addon-vscode"
 ingress: true
 ingress_port: 1337
 ingress_stream: true
@@ -18,9 +19,9 @@ hassio_api: true
 hassio_role: manager
 homeassistant_api: true
 map:
-  - type: addons
+  - type: local_apps
     read_only: false
-  - type: all_addon_configs
+  - type: all_app_configs
     read_only: false
   - type: backup
     read_only: false
