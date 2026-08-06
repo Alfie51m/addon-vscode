@@ -1,4 +1,4 @@
-# Code Editor (personal fork of Studio Code Server)
+# Home Assistant Studio Code Server
 
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
@@ -34,7 +34,7 @@ This add-on publishes a prebuilt multi-arch image via GitHub Actions on
 every release, so installs and updates pull the image from GHCR instead of
 building on your host.
 
-[:books: Read the full add-on documentation][docs]
+[Read the full add-on documentation][docs]
 
 ## Support
 
