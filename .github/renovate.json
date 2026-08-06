@@ -8,11 +8,10 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["//Dockerfile$/", "//build.yaml$/"],
+      "managerFilePatterns": ["//Dockerfile$/"],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+",
-        "(aarch64|amd64):\\s[\"']?(?<depName>.*?):(?<currentValue>.*?)[\"']?\\s"
+        "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+"
       ],
       "datasourceTemplate": "docker"
     },
@@ -34,7 +33,7 @@
         "ARG CODE_SERVER_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "cdr/code-server"
+      "depNameTemplate": "coder/code-server"
     },
     {
       "customType": "regex",
@@ -89,13 +88,6 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "lukas-tr/vscode-materialdesignicons-intellisense",
       "extractVersionTemplate": "^v(?<version>.*)$"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/vscode/vscode.extensions$/"],
-      "matchStrings": ["netcorext\\.uuid-generator#(?<currentValue>.+)\\s"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "arenchen/vscode-uuid-generator"
     },
     {
       "customType": "regex",
