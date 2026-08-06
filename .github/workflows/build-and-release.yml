@@ -1,24 +1,32 @@
----
 name: Build & Release
 
 on:
-  workflow_dispatch:
   pull_request:
     paths:
       - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
   push:
     branches: [main]
     paths:
       - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
+  workflow_dispatch:
 
 env:
   IMAGE_NAME: addon-vscode
   ARCHITECTURES: '["amd64", "aarch64"]'
+  # NOTE: home-assistant/builder version is pinned directly in each `uses:`
+  # line below (2026.06.0) rather than referenced from here, because the
+  # `env` context is not available inside `uses:` expressions - bump all
+  # four occurrences together when upgrading.
 
 permissions:
   contents: read
 
 jobs:
+  # ----------------------------------------------------------------------
+  # Lint: Dockerfile, YAML, shell scripts, and the add-on config schema.
+  # ----------------------------------------------------------------------
   lint:
     name: 🔍 Lint
     runs-on: ubuntu-latest
@@ -57,6 +65,10 @@ jobs:
             echo "::error::config.yaml is missing the image field"; exit 1; }
           echo "config.yaml OK: version=$(yq -r '.version' vscode/config.yaml), image=$(yq -r '.image' vscode/config.yaml)"
 
+  # ----------------------------------------------------------------------
+  # Trial build every architecture (no push). This is the gate: nothing
+  # ever gets published unless every arch builds cleanly here first.
+  # ----------------------------------------------------------------------
   prepare:
     name: 🧮 Prepare build matrix
     needs: lint
@@ -100,10 +112,14 @@ jobs:
           cosign: "false"
           version: "0.0.0-ci"
 
+  # ----------------------------------------------------------------------
+  # Only on push to main: has the version actually changed / been
+  # released yet? Everything downstream is skipped otherwise.
+  # ----------------------------------------------------------------------
   check-version:
     name: 🔖 Check version
     needs: test-build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     outputs:
       should_release: ${{ steps.check.outputs.should_release }}
@@ -129,6 +145,9 @@ jobs:
             echo "should_release=true" >> "$GITHUB_OUTPUT"
           fi
 
+  # ----------------------------------------------------------------------
+  # Build & push the real per-arch images to GHCR.
+  # ----------------------------------------------------------------------
   publish:
     name: 📦 Publish ${{ matrix.arch }} image
     needs: [prepare, check-version]
@@ -163,6 +182,10 @@ jobs:
             io.hass.type=app
             io.hass.url=https://github.com/Alfie51m/addon-vscode
 
+  # ----------------------------------------------------------------------
+  # Combine the per-arch images into the multi-arch manifest that
+  # config.yaml's `image:` field references.
+  # ----------------------------------------------------------------------
   manifest:
     name: 🗂️ Publish multi-arch manifest
     needs: [check-version, publish]
@@ -180,6 +203,10 @@ jobs:
             ${{ needs.check-version.outputs.version }}
             latest
 
+  # ----------------------------------------------------------------------
+  # Changelog + GitHub Release. CHANGELOG.md lives in the add-on folder
+  # so Supervisor's "Changelog" tab shows it directly from the repo.
+  # ----------------------------------------------------------------------
   changelog-and-release:
     name: 📝 Changelog & release
     needs: [check-version, manifest]
