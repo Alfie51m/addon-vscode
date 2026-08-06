@@ -158,7 +158,7 @@ or its Discord/Community Forum channels.
 If you run into an issue specifically with this fork, feel free to
 [open an issue here][issue].
 
-For the original, actively-supported project, see
+For the original, unsupported project, see
 [hassio-addons/addon-vscode][upstream].
 
 ## Authors & contributors
@@ -191,7 +191,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
-[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=a0d7b954_vscode&repository_url=https%3A%2F%2Fgithub.com%2Fhassio-addons%2Frepository
+[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ef6a2eeb_vscode&repository_url=https%3A%2F%2Fgithub.com%2FAlfie51m%2Faddon-vscode
 [frenck]: https://github.com/frenck
 [issue]: https://github.com/Alfie51m/addon-vscode/issues
 [me]: https://github.com/Alfie51m

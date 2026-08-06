@@ -45,7 +45,7 @@ or its Discord/Community Forum channels.
 If you run into an issue specifically with this fork, feel free to
 [open an issue here][issue].
 
-For the original, actively-supported project, see
+For the original, unsupported project, see
 [hassio-addons/addon-vscode][upstream].
 
 ## Authors & contributors
