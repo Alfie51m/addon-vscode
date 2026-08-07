@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🐳 Hadolint the Dockerfile
         uses: hadolint/hadolint-action@v3.4.0
@@ -77,7 +77,7 @@ jobs:
       image: ${{ steps.image.outputs.image }}
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🧮 Get build matrix
         id: matrix
@@ -108,7 +108,7 @@ jobs:
       contents: read
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 🏗️ Build ${{ matrix.arch }} (no push)
         uses: home-assistant/builder/actions/build-image@2026.06.0
@@ -137,7 +137,7 @@ jobs:
       version: ${{ steps.check.outputs.version }}
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -172,7 +172,7 @@ jobs:
       packages: write
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 📦 Build & push ${{ matrix.arch }}
         uses: home-assistant/builder/actions/build-image@2026.06.0
@@ -237,7 +237,7 @@ jobs:
       contents: write
     steps:
       - name: ⬇️ Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
