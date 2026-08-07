@@ -1,0 +1,65 @@
+name: Bump Version After Renovate Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  bump-version:
+    name: 🔼 Bump addon version
+    if: github.event.pull_request.merged == true && github.event.pull_request.user.login == 'renovate[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: ⬇️ Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔼 Bump patch version
+        id: bump
+        run: |
+          python3 -m pip install --quiet yq
+          current=$(yq -r '.version' vscode/config.yaml)
+
+          IFS='.' read -r major minor patch <<< "${current}"
+          if [ -z "${major}" ] || [ -z "${minor}" ] || [ -z "${patch}" ]; then
+            echo "::error::Could not parse current version '${current}' as major.minor.patch"
+            exit 1
+          fi
+          new="${major}.${minor}.$((patch + 1))"
+
+          yq -Y -i --arg v "${new}" '.version = $v' vscode/config.yaml
+
+          echo "old=${current}" >> "$GITHUB_OUTPUT"
+          echo "new=${new}" >> "$GITHUB_OUTPUT"
+
+      - name: ⬆️ Commit & push (with retry on race)
+        env:
+          OLD: ${{ steps.bump.outputs.old }}
+          NEW: ${{ steps.bump.outputs.new }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vscode/config.yaml
+          git commit -m "chore: bump version ${OLD} -> ${NEW} (${PR_TITLE})"
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then
+              exit 0
+            fi
+            echo "Push failed (attempt ${attempt}/5), rebasing onto latest main and retrying..."
+            git pull --rebase origin main
+            sleep $((attempt * 3))
+          done
+
+          echo "::error::Failed to push version bump after 5 attempts"
+          exit 1

@@ -8,8 +8,26 @@
   "customManagers": [
     {
       "customType": "regex",
+      "managerFilePatterns": ["/vscode/vscode.extensions$/"],
+      "matchStrings": [
+        "oderwat\\.indent-rainbow#(?<currentValue>.+)\\s"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "oderwat/vscode-indent-rainbow",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/vscode/vscode.extensions$/"],
+      "matchStrings": [
+        "redhat\\.vscode-yaml#(?<currentValue>.+)\\s"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "redhat-developer/vscode-yaml"
+    },
+    {
+      "customType": "regex",
       "managerFilePatterns": ["//Dockerfile$/"],
-      "matchStringsStrategy": "any",
       "matchStrings": [
         "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+"
       ],
