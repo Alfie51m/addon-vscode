@@ -110,7 +110,7 @@ return to the defaults as delivered by this add-on, do the following:
   operating system. Also, see point below.
 - This add-on currently only supports AMD64 and aarch64/ARM64 machines.
   Although we support ARM devices, please be aware, that this add-on is quite
-  heavy to run, and requires quite a bit of RAM. We do not recommended to run
+  heavy to run, and requires quite a bit of RAM. We do not recommend to run
   it on devices with less than 4Gb of memory.
 - **Do not use the root directory (`/`) as your workspace.** Opening the root
   directory causes severe performance issues, as VS Code will attempt to index
@@ -143,7 +143,7 @@ based on the following:
 
 ## Support
 
-This is a personal fork maintained for my own Home Assistant instance. It is
+This is a personal fork maintained by [Alfie51m][me]. It is
 not affiliated with or supported by the original Studio Code Server project
 or its Discord/Community Forum channels.
 
