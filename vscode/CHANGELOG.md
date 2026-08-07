@@ -6,6 +6,18 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 6.3.2 - 2026-08-07
+
+- Update docs (b20c5d1)
+- Fix issues within workflows (4c25b68)
+- chore: bump version 6.3.1 -> 6.3.2 (⬆️ Update hadolint/hadolint-action action to v3.4.0) (000b11d)
+- chore: bump version 6.3.0 -> 6.3.1 (⬆️ Update esphome to v2026.7.4) (24cede7)
+- ⬆️ Update esphome to v2026.7.4 (#1) (6c0399d)
+- Add config for renovate bot (96f013b)
+- Add config for renovate bot (5498449)
+- Update CHANGELOG.md (f9599a8)
+
+
 ## 6.3.0 - 2026-08-06
 
 - Addon bug fixes (6fdc2de)
