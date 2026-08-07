@@ -6,6 +6,11 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 6.3.4 - 2026-08-07
+
+- Maintenance release.
+
+
 ## 6.3.3 - 2026-08-07
 
 - chore: bump version 6.3.3 -> 6.3.4 (⬆️ Update actions/checkout action to v7) (f08e6c7)
