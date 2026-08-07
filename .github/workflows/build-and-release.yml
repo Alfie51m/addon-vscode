@@ -14,6 +14,10 @@ on:
       - "vscode/**"
       - ".github/workflows/build-and-release.yml"
 
+concurrency:
+  group: build-and-release-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   IMAGE_NAME: addon-vscode
   ARCHITECTURES: '["amd64", "aarch64"]'
