@@ -3,3 +3,8 @@ ignored:
   # BUILD_FROM is intentionally a variable with a pinned default, not a
   # literal tag, so hadolint can't verify the pin itself.
   - DL3006
+  # SHELL is explicitly set to bash above (not the Dockerfile default of
+  # sh), specifically so bash-only syntax like brace expansion
+  # (/var/{cache,log}/*) is safe to use. SC3009 checks POSIX sh
+  # portability, which is irrelevant once bash is deliberately chosen.
+  - SC3009

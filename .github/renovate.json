@@ -38,11 +38,11 @@
       "managerFilePatterns": ["//Dockerfile$/"],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\\s\\s(?<package>[a-z0-9][a-z0-9-]+)=(?<currentValue>[a-z0-9-:_+~.]+)\\s+"
+        "\\s\\s(?<package>(?!build-essential\\b)[a-z0-9][a-z0-9-]+)=(?<currentValue>[a-z0-9-:_+~.]+)\\s+"
       ],
       "versioningTemplate": "deb",
       "datasourceTemplate": "repology",
-      "depNameTemplate": "debian_13/{{{replace 'openssh-client' 'openssh' package}}}"
+      "depNameTemplate": "debian_13/{{{replace 'openssh-client' 'openssh' (replace 'locales' 'glibc' package)}}}"
     },
     {
       "customType": "regex",

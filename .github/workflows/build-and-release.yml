@@ -1,10 +1,17 @@
 name: Build & Release
 
 on:
-  pull_request:
   workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
   push:
     branches: [ main ]
+    paths:
+      - "vscode/**"
+      - ".github/workflows/build-and-release.yml"
 
 env:
   IMAGE_NAME: addon-vscode

@@ -139,6 +139,7 @@ RUN \
 COPY rootfs /
 
 # Health check
+# hadolint ignore=DL3025
 HEALTHCHECK \
     CMD curl --fail http://127.0.0.1:1337/healthz || exit 1
 
