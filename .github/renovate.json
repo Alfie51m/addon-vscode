@@ -38,7 +38,7 @@
       "managerFilePatterns": ["//Dockerfile$/"],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "\\s\\s(?<package>(?!build-essential\\b)[a-z0-9][a-z0-9-]+)=(?<currentValue>[a-z0-9-:_+~.]+)\\s+"
+        "\\s\\s(?<package>ack|libarchive-tools|colordiff|git|iputils-ping|locales|mariadb-client|mosquitto-clients|net-tools|nmap|openssh-client|openssl|python3-dev|python3-venv|python3|unzip|uuid-runtime|wget|zip|zsh|less)=(?<currentValue>[a-z0-9-:_+~.]+)\\s+"
       ],
       "versioningTemplate": "deb",
       "datasourceTemplate": "repology",
