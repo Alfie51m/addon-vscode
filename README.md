@@ -1,4 +1,7 @@
-# Home Assistant Studio Code Server
+# Home Assistant Add-on: Studio Code Server
+
+[![GitHub Release][releases-shield]][releases]
+![Project Maintenance][maintenance-shield]
 
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
@@ -6,8 +9,7 @@
 ![Supports amd64 Architecture][amd64-shield]
 ![Supports aarch64 Architecture][aarch64-shield]
 
-A VSCode experience, accessible through the browser — personal fork with an
-updated editor and extension stack.
+A VSCode experience, accessible through the browser.
 
 ![Studio Code Server in the Home Assistant Frontend](images/screenshot.png)
 
@@ -18,7 +20,7 @@ gives you a Visual Studio Code experience straight from the browser. It allows
 you to edit your Home Assistant configuration directly from your web browser,
 directly from within the Home Assistant frontend.
 
-This is a personal fork of the original
+This is a fork of the original
 [Studio Code Server][upstream] add-on by Franck Nijhof, maintained here to
 keep the bundled editor and extensions current. The upstream add-on had gone
 without a version bump for an extended period.
@@ -31,7 +33,7 @@ building on your host.
 
 ## Support
 
-This is a personal fork maintained for my own Home Assistant instance. It is
+This is a personal fork maintained by [Alfie51m][me]. It is
 not affiliated with or supported by the original Studio Code Server project
 or its Discord/Community Forum channels.
 
@@ -77,5 +79,8 @@ SOFTWARE.
 [issue]: https://github.com/Alfie51m/addon-vscode/issues
 [license-shield]: https://img.shields.io/github/license/Alfie51m/addon-vscode.svg
 [me]: https://github.com/Alfie51m
-[project-stage-shield]: https://img.shields.io/badge/project%20stage-personal%20fork-blue.svg
 [upstream]: https://github.com/hassio-addons/addon-vscode
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-production-brightgreen.svg
+[releases]: https://github.com/Alfie51m/addon-vscode/releases
+[releases-shield]: https://img.shields.io/github/release/Alfie51m/addon-vscode.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg

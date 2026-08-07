@@ -5,7 +5,7 @@ gives you a Visual Studio Code experience straight from the browser. It allows
 you to edit your Home Assistant configuration directly from your web browser,
 directly from within the Home Assistant frontend.
 
-This is a personal fork of the original [Studio Code Server][upstream]
+This is a fork of the original [Studio Code Server][upstream]
 add-on by Franck Nijhof, maintained here to keep the bundled editor and
 extensions current.
 
