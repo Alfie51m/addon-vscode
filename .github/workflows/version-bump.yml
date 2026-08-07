@@ -1,3 +1,4 @@
+---
 name: Bump Version After Renovate Merge
 
 on:
@@ -36,7 +37,7 @@ jobs:
           fi
           new="${major}.${minor}.$((patch + 1))"
 
-          yq -Y -i --arg v "${new}" '.version = $v' vscode/config.yaml
+          yq -Y --explicit-start -i --arg v "${new}" '.version = $v' vscode/config.yaml
 
           echo "old=${current}" >> "$GITHUB_OUTPUT"
           echo "new=${new}" >> "$GITHUB_OUTPUT"
