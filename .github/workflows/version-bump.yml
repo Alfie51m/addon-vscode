@@ -16,9 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
     steps:
       - name: ⬇️ Checkout main
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
@@ -64,3 +65,16 @@ jobs:
 
           echo "::error::Failed to push version bump after 5 attempts"
           exit 1
+
+      - name: 🚀 Trigger release build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEW: ${{ steps.bump.outputs.new }}
+        run: |
+          # This is the step that actually matters: the push above landed
+          # on main, but pushes authenticated with GITHUB_TOKEN don't
+          # trigger other workflows' `push` events, so build-and-release.yml
+          # would otherwise never run. Dispatching it explicitly via the
+          # API sidesteps that restriction entirely.
+          echo "Triggering build-and-release.yml for v${NEW}"
+          gh workflow run build-and-release.yml --ref main
