@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.0 - 2026-08-07
+
+- Update remaining project docs + version bump (607bcf2)
+- Update docs & HA repository name (326f28e)
+
+
 ## 6.3.4 - 2026-08-07
 
 - Maintenance release.
