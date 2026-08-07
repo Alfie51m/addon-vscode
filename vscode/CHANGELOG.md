@@ -6,6 +6,14 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 6.3.3 - 2026-08-07
+
+- chore: bump version 6.3.3 -> 6.3.4 (⬆️ Update actions/checkout action to v7) (f08e6c7)
+- Fix version number + update workflows (06b477a)
+- chore: bump version 6.3.3 -> 6.3.4 (⬆️ Update actions/checkout action to v7) (6277459)
+- chore: bump version 6.3.2 -> 6.3.3 (⬆️ Update softprops/action-gh-release action to v3) (81327af)
+
+
 ## 6.3.2 - 2026-08-07
 
 - Update docs (b20c5d1)
