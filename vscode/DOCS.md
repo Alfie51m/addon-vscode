@@ -7,14 +7,7 @@ directly from within the Home Assistant frontend.
 
 This is a personal fork of the original [Studio Code Server][upstream]
 add-on by Franck Nijhof, maintained here to keep the bundled editor and
-extensions current. It bundles:
-
-- **code-server**: `v4.131.0` (VS Code `1.131.0`)
-- **Home Assistant CLI**: `5.2.0`
-- Refreshed extensions, including the Home Assistant Config Helper, YAML,
-  ESPHome, Prettier, Error Lens, indent-rainbow, Material Design Icons
-  Intellisense, and Log File Highlighter
-- Refreshed `esphome` and `yamllint` backend tooling
+extensions current.
 
 The add-on has the Home Assistant, MDI icons and YAML extensions pre-installed
 and pre-configured right out of the box. This means that auto-completion works

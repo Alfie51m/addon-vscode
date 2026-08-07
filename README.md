@@ -21,14 +21,7 @@ directly from within the Home Assistant frontend.
 This is a personal fork of the original
 [Studio Code Server][upstream] add-on by Franck Nijhof, maintained here to
 keep the bundled editor and extensions current. The upstream add-on had gone
-without a version bump for an extended period, so this fork updates:
-
-- **code-server**: `v4.131.0` (VS Code `1.131.0`)
-- **Home Assistant CLI**: `5.2.0`
-- Bundled extensions refreshed to their latest available versions, including
-  the Home Assistant Config Helper, YAML, ESPHome, Prettier, Error Lens,
-  indent-rainbow, Material Design Icons Intellisense, and Log File Highlighter
-- `esphome` and `yamllint` backend tooling refreshed to current releases
+without a version bump for an extended period.
 
 This add-on publishes a prebuilt multi-arch image via GitHub Actions on
 every release, so installs and updates pull the image from GHCR instead of
