@@ -6,6 +6,13 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.1 - 2026-08-10
+
+- chore: bump version 7.0.0 -> 7.0.1 (⬆️ Update coder/code-server to v4.132.0) (3255960)
+- ⬆️ Update coder/code-server to v4.132.0 (03683d9)
+- chore: clean up remaining stale/upstream artifacts (879ebfc)
+
+
 ## 7.0.0 - 2026-08-07
 
 - Update remaining project docs + version bump (607bcf2)
