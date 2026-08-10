@@ -23,7 +23,7 @@ COPY branding/code-icon.svg /tmp/code-icon.svg
 
 # Setup base system
 ARG BUILD_ARCH=amd64
-ARG CODE_SERVER_VERSION="v4.131.0"
+ARG CODE_SERVER_VERSION="v4.132.0"
 ARG HA_CLI_VERSION="5.2.0"
 # hadolint ignore=SC2181
 RUN \
