@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.2 - 2026-08-12
+
+- chore: bump version 7.0.1 -> 7.0.2 (⬆️ Update home-assistant/cli to v5.3.0) (104d484)
+- ⬆️ Update home-assistant/cli to v5.3.0 (bcd9f38)
+
+
 ## 7.0.1 - 2026-08-10
 
 - chore: bump version 7.0.0 -> 7.0.1 (⬆️ Update coder/code-server to v4.132.0) (3255960)
