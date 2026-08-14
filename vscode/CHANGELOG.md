@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.3 - 2026-08-14
+
+- chore: bump version 7.0.2 -> 7.0.3 (⬆️ Update debian_13/zip to v3.0-15+deb13u1) (c8b3652)
+- ⬆️ Update debian_13/zip to v3.0-15+deb13u1 (#11) (1a9849a)
+
+
 ## 7.0.2 - 2026-08-12
 
 - chore: bump version 7.0.1 -> 7.0.2 (⬆️ Update home-assistant/cli to v5.3.0) (104d484)
