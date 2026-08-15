@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.4 - 2026-08-15
+
+- chore: bump version 7.0.3 -> 7.0.4 (⬆️ Update debian_13/unzip to v6.0-29+deb13u1) (591d49b)
+- ⬆️ Update debian_13/unzip to v6.0-29+deb13u1 (#10) (661e3d9)
+
+
 ## 7.0.3 - 2026-08-14
 
 - chore: bump version 7.0.2 -> 7.0.3 (⬆️ Update debian_13/zip to v3.0-15+deb13u1) (c8b3652)
