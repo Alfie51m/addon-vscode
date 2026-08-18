@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.6 - 2026-08-18
+
+- chore: bump version 7.0.5 -> 7.0.6 (⬆️ Update ghcr.io/hassio-addons/debian-base Docker tag to v9.4.0) (8940f8f)
+- ⬆️ Update ghcr.io/hassio-addons/debian-base Docker tag to v9.4.0 (e703976)
+
+
 ## 7.0.5 - 2026-08-18
 
 - chore: bump version 7.0.4 -> 7.0.5 (⬆️ Update coder/code-server to v4.133.0) (c5cbc41)
