@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.5 - 2026-08-18
+
+- chore: bump version 7.0.4 -> 7.0.5 (⬆️ Update coder/code-server to v4.133.0) (c5cbc41)
+- ⬆️ Update coder/code-server to v4.133.0 (aa56f52)
+
+
 ## 7.0.4 - 2026-08-15
 
 - chore: bump version 7.0.3 -> 7.0.4 (⬆️ Update debian_13/unzip to v6.0-29+deb13u1) (591d49b)
