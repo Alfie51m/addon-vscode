@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.7 - 2026-08-18
+
+- chore: bump version 7.0.6 -> 7.0.7 (⬆️ Update home-assistant/cli to v5.3.1) (66d8079)
+- ⬆️ Update home-assistant/cli to v5.3.1 (#14) (09aa789)
+
+
 ## 7.0.6 - 2026-08-18
 
 - chore: bump version 7.0.5 -> 7.0.6 (⬆️ Update ghcr.io/hassio-addons/debian-base Docker tag to v9.4.0) (8940f8f)
