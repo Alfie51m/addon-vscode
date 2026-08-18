@@ -24,7 +24,7 @@ COPY branding/code-icon.svg /tmp/code-icon.svg
 # Setup base system
 ARG BUILD_ARCH=amd64
 ARG CODE_SERVER_VERSION="v4.133.0"
-ARG HA_CLI_VERSION="5.3.0"
+ARG HA_CLI_VERSION="5.3.1"
 # hadolint ignore=SC2181
 RUN \
     apt-get update \
