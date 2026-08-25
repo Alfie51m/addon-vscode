@@ -6,6 +6,11 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.10 - 2026-08-25
+
+- chore: bump version 7.0.9 -> 7.0.10 (⬆️ Update esphome to v2026.8.1) (b7b3099)
+
+
 ## 7.0.9 - 2026-08-24
 
 - chore: bump version 7.0.8 -> 7.0.9 (⬆️ Update esphome to v2026.8.1) (9a3e9f7)
