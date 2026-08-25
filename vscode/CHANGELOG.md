@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.11 - 2026-08-25
+
+- chore: bump version 7.0.10 -> 7.0.11 (⬆️ Update coder/code-server to v4.134.0) (5cf5d19)
+- ⬆️ Update coder/code-server to v4.134.0 (#18) (601424d)
+
+
 ## 7.0.10 - 2026-08-25
 
 - chore: bump version 7.0.9 -> 7.0.10 (⬆️ Update esphome to v2026.8.1) (b7b3099)
