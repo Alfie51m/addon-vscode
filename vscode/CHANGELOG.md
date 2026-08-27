@@ -6,6 +6,11 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.13 - 2026-08-27
+
+- chore: bump version 7.0.12 -> 7.0.13 (⬆️ Update coder/code-server to v4.135.0) (1d8250f)
+
+
 ## 7.0.12 - 2026-08-26
 
 - chore: bump version 7.0.11 -> 7.0.12 (⬆️ Update debian_13/openssl to v3.5.7-1~deb13u2) (5cf67b5)
