@@ -6,6 +6,12 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.15 - 2026-08-31
+
+- chore: bump version 7.0.14 -> 7.0.15 (⬆️ Update esphome to v2026.8.2) (e637cfb)
+- ⬆️ Update esphome to v2026.8.2 (#27) (b7f67f1)
+
+
 ## 7.0.14 - 2026-08-28
 
 - chore: bump version 7.0.13 -> 7.0.14 (⬆️ Update hadolint/hadolint-action action to v3.5.0) (a8f95d4)
