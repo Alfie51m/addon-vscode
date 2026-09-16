@@ -6,6 +6,11 @@ published.
 
 <!-- new entries are inserted below this line by the release workflow -->
 
+## 7.0.17 - 2026-09-16
+
+- chore: bump version 7.0.16 -> 7.0.17 (⬆️ Update esphome to v2026.9.0) (4878007)
+
+
 ## 7.0.16 - 2026-09-03
 
 - chore: bump version 7.0.15 -> 7.0.16 (⬆️ Update home-assistant/cli to v5.5.0) (05f3795)
